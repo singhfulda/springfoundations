@@ -14,11 +14,18 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @Import(DataConfig.class)
-@PropertySource( "classpath:/application.properties" )
+@PropertySource( "classpath:/application-${spring.profiles.active}.properties" )
 public class AppConfig {
 
     @Value("${greeting.text}")
     private String greetingText;
+
+    @Value("${greeting.preamble}")
+    private String greetingPreamble;
+
+    //adding environment variable and creating a Java Object with that
+    @Value("#{new Boolean(environment['spring.profiles.active']=='dev')}")
+    private boolean isDev;
 
     public class Worker{
         private String preamble;
@@ -29,22 +36,16 @@ public class AppConfig {
             this.text = text;
         }
         public void execute() {
-            System.out.println( preamble + " " + text );
+            System.out.println( preamble + " " + text + " is dev: " + isDev ); //showing is dev or not
         }
     }
 
 
     @Bean
-    @Profile("dev")
-    public Worker workerForDev(){
-        return new Worker("Hello", greetingText);
+    public Worker worker(){
+        return new Worker(greetingPreamble, greetingText);
     }
 
-    @Bean
-    @Profile("prod")
-    public Worker workerForProd(){
-        return new Worker("Greetings", greetingText);
-    }
 
 
     @Autowired
