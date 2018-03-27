@@ -21,20 +21,29 @@ public class AppConfig {
     private String greetingText;
 
     public class Worker{
+        private String preamble;
         private String text;
 
-        public Worker(String text){
+        public Worker(String preamble, String text){
+            this.preamble = preamble;
             this.text = text;
         }
         public void execute() {
-            System.out.println( "Hello " + text );
+            System.out.println( preamble + " " + text );
         }
     }
 
 
     @Bean
-    public Worker worker(){
-        return new Worker(greetingText);
+    @Profile("dev")
+    public Worker workerForDev(){
+        return new Worker("Hello", greetingText);
+    }
+
+    @Bean
+    @Profile("prod")
+    public Worker workerForProd(){
+        return new Worker("Greetings", greetingText);
     }
 
 
