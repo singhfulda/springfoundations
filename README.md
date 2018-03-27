@@ -7,3 +7,7 @@
 5. Spring Profiles. Alternate Configuration based on envrionment variables. Change in IDE environment variables to see which profile is working.
 6. Spring expression Language : creating object with SpEL
 7. Bean Scopes Singletons {default, single instance} , Prototype {new instance every time it is referenced}, Session {one instance of bean per session}, Request {on instance per request} 
+8. Proxies are aspects. Every Class gets one proxy after spring 4.0. behaviour applied to messaging classes only apply to public methods . Subclasses and private methods not.
+
+Annotation Based Configuration
+9. Dependency Injection with Component Scanning using @ComponentScan. Provide basepackages in order to scan for components and add annotations to components like service, Repository

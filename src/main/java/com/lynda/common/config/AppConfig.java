@@ -13,8 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@Import(DataConfig.class)
-@PropertySource( "classpath:/application-${spring.profiles.active}.properties" )
+@PropertySource("classpath:/application.properties")
+@ComponentScan(basePackages = {"com.lynda.common"})
 public class AppConfig {
 
     @Value("${greeting.text}")
@@ -23,9 +23,6 @@ public class AppConfig {
     @Value("${greeting.preamble}")
     private String greetingPreamble;
 
-    //adding environment variable and creating a Java Object with that
-    @Value("#{new Boolean(environment['spring.profiles.active']=='dev')}")
-    private boolean isDev;
 
     public class Worker{
         private String preamble;
@@ -34,53 +31,26 @@ public class AppConfig {
         public Worker(String preamble, String text){
             this.preamble = preamble;
             this.text = text;
-            System.out.println( "New Instance" ); // 7- checking generation of instance while putting scopes in place
+            System.out.println("New Instance");
         }
-        public void execute() {
-            System.out.println( preamble + " " + text + " is dev: " + isDev ); //showing is dev or not
+
+        public void execute(){
+            System.out.println(preamble + " " + text);
         }
-    }
 
-
-    @Bean
-    @Scope("prototype")  //7- adding scope to bean singleton is default
-    public Worker worker(){
-        return new Worker(greetingPreamble, greetingText);
-    }
-
-
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private InventoryItemRepository inventoryItemRepository;
-
-    @Autowired
-    private SalesOrderRepository salesOrderRepository;
-
-    @Bean
-    public OrderService orderService(InventoryService inventoryService, CustomerRepository customerRepository, SalesOrderRepository salesOrderRepository){
-        return new OrderServiceImpl(inventoryService, customerRepository, salesOrderRepository);
     }
 
     @Bean
-    public InventoryService inventoryService(InventoryItemRepository inventoryItemRepository){
-        return new InventoryServiceImpl(inventoryItemRepository);
+    public Worker worker() {
+        return new Worker( greetingPreamble, greetingText );
     }
-
 
     public static void main (String[] args){
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        OrderService orderService = context.getBean(OrderService.class);
-        System.out.println(orderService==null?"NULL":"A OK");
-
         Worker worker = context.getBean( Worker.class );
         worker.execute();
+        OrderService orderService = context.getBean( OrderService.class );
 
-        // see 2 New Instance
-        Worker worker1 = context.getBean( Worker.class  );
-        worker1.execute();
 
     }
 }
