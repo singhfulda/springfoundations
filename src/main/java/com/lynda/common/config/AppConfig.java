@@ -34,6 +34,7 @@ public class AppConfig {
         public Worker(String preamble, String text){
             this.preamble = preamble;
             this.text = text;
+            System.out.println( "New Instance" ); // 7- checking generation of instance while putting scopes in place
         }
         public void execute() {
             System.out.println( preamble + " " + text + " is dev: " + isDev ); //showing is dev or not
@@ -42,6 +43,7 @@ public class AppConfig {
 
 
     @Bean
+    @Scope("prototype")  //7- adding scope to bean singleton is default
     public Worker worker(){
         return new Worker(greetingPreamble, greetingText);
     }
@@ -75,6 +77,10 @@ public class AppConfig {
 
         Worker worker = context.getBean( Worker.class );
         worker.execute();
+
+        // see 2 New Instance
+        Worker worker1 = context.getBean( Worker.class  );
+        worker1.execute();
 
     }
 }
