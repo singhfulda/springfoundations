@@ -16,6 +16,7 @@ public class HalloConfig {
     ApplicationContext context = new AnnotationConfigApplicationContext( HalloConfig.class );
     String text = (String) context.getBean("greeting");
     System.out.println("Hello " + text);
+
   }
 
 }
