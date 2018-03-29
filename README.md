@@ -36,5 +36,6 @@ Bean Lifecycle
 21. Destruction : begins with close @PreDestroy is called. Beans not destroyed and allow it for garbage collector to destroy. context cannot be reused.
 
 Aspect Oriented Programming
+
 22. Aspects: are reusable blocks of code that are injected into application at runtime. See for every or always in requirements or requirements that apply to muktiple business requirements(Cross-cutting concerns which can be solved by Aspects). Spring uses AspectJ. Parts: Join Point- is where to execution of a Aspect is targeted. Pointcut- is expression used to locate Join Point. Advice- is code going to run/routine. Aspect is Module which contains all Pointcuts and advices that will be injected at runtime of application.
 23. Pointcut: designator("r p.c.m(arg)). Execution Designator-expression for matching and excute advice. Within- matching within certain types. Target- matching specific type. @Annotation- expression for matching a annotation.  
