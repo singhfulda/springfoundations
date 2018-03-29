@@ -26,3 +26,10 @@ XML Based Configuration
 
 
 Bean Lifecycle
+
+15. Bean definition loaded {no real beans loaded, from java, xml, autoconfigure}. 
+16. Postprocessor work on entire BeanFactory, modify or transform bean prior to instantiation as PropertySourcesPlaceholderConfigurer. Create own by extending Interface. At end BeanFactory is loaded with references and all beans are configured. System Level work is done.
+17. Bean Instiantiation: dependencies first. Beans instiantiated Eagerly by default. Lazy loaded only when no dependency. At end Bean Pointer to each BeanFactory, Objects constructed but not available for use yet.
+18  Instiantiation: Setters. Spring modifies with setter elements for each class. Autowiring occurs here other than constructor based which is in phase before.At end Beans fully Intialized, all dependcy added. but still not ready.
+19. Bean Post Processing: preinit, intializer, postinit. Initializer here will @PostConstruct will be added here. At end beans instianted and intialized and dependcies adedd and ready to use.
+
