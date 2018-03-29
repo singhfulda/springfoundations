@@ -32,4 +32,7 @@ Bean Lifecycle
 17. Bean Instiantiation: dependencies first. Beans instiantiated Eagerly by default. Lazy loaded only when no dependency. At end Bean Pointer to each BeanFactory, Objects constructed but not available for use yet.
 18  Instiantiation: Setters. Spring modifies with setter elements for each class. Autowiring occurs here other than constructor based which is in phase before.At end Beans fully Intialized, all dependcy added. but still not ready.
 19. Bean Post Processing: preinit, intializer, postinit. Initializer here will @PostConstruct will be added here. At end beans instianted and intialized and dependcies adedd and ready to use.
+20. Use Phase: ApplicationContext serves proxies to original class and maintains handle to each bean(singleton).
+21. Destruction : begins with close @PreDestroy is called. Beans not destroyed and allow it for garbage collector to destroy. context cannot be reused.
 
+Aspect Oriented Programming
